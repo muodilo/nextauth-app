@@ -102,7 +102,7 @@ export default function RegisterPage() {
         </Button>
       </form>
 
-      <Link className="w-full text-center" href={'/login'}><Button variant='link'>Already have an account? Sign in</Button></Link>
+      <Link className="w-full text-center " href={'/login'}><Button className="text-neutral-500" variant='link'>Already have an account? Sign in</Button></Link>
       
     </div>
   )
