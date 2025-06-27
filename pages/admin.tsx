@@ -36,7 +36,7 @@ export default function AdminPage() {
   }, []);
 
   return (
-    <div className="px-32 pt-12">
+    <div className="md:px-32 pt-12">
       <h1 className="mb-3 text-3xl font-bold">Registered Users</h1>
       <p className="mb-8 text-neutral-500 text-sm">Manage all registered users within the system</p>
 

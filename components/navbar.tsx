@@ -18,9 +18,14 @@ const Navbar = () => {
           </Link>
         )}
         {session?.user?.role === "admin" && (
-          <Link href="/admin" className="hover:text-blue-500">
-            Admin
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link href="/dashboard" className="hover:text-blue-500">
+              Dashboard
+            </Link>
+            <Link href="/admin" className="hover:text-blue-500">
+              Admin
+            </Link>
+          </div>
         )}
         {session?.user?.image && (
           <Avatar>
@@ -37,15 +42,18 @@ const Navbar = () => {
             Logout
           </Button>
         ) : (
-            <div className="flex gap-3">
-          <Link href="/register">
-            <Button className="rounded-full" variant='customSubmit' >Register</Button>
-          </Link>
-          <Link href="/login">
-            <Button variant='outline' className="rounded-full " >Login</Button>
-          </Link>
-
-            </div>
+          <div className="flex gap-3">
+            <Link href="/register">
+              <Button className="rounded-full" variant="customSubmit">
+                Register
+              </Button>
+            </Link>
+            <Link href="/login">
+              <Button variant="outline" className="rounded-full ">
+                Login
+              </Button>
+            </Link>
+          </div>
         )}
       </nav>
     </header>
