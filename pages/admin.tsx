@@ -11,11 +11,9 @@ type User = {
   role: string;
 };
 
-interface AdminPageProps {
-  userEmail: string;
-}
 
-export default function AdminPage({ userEmail }: AdminPageProps) {
+
+export default function AdminPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
