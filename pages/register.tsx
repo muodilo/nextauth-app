@@ -25,39 +25,47 @@ export default function RegisterPage() {
     resolver: zodResolver(registerSchema),
   })
 
-  const onSubmit = async (form: RegisterSchemaType) => {
-    setLoading(true)
+const onSubmit = async (form: RegisterSchemaType) => {
+  setLoading(true);
 
-    const role = form.email.endsWith("@gmail.com") ? "user" : "admin"
+  const role = form.email.endsWith("@gmail.com") ? "user" : "admin";
 
-    const { error } = await supabase.auth.signUp({
-      email: form.email,
-      password: form.password,
-      options: {
-        data: {
-          fullName: form.fullName,
-          role,
-        },
+  const { error } = await supabase.auth.signUp({
+    email: form.email,
+    password: form.password,
+    options: {
+      data: {
+        fullName: form.fullName,
+        role,
       },
-    })
+    },
+  });
 
-    setLoading(false)
+  setLoading(false);
 
-    if (error) {
-      toast.error(`Registration failed: ${error.message}`)
+  if (error) {
+    if (
+      error.message.toLowerCase().includes("already registered") ||
+      error.message.toLowerCase().includes("already exists")
+    ) {
+      toast.error("User already registered. Please log in.");
     } else {
-      toast.success("Account created. Please log in.")
-      router.push("/login")
+      toast.error(`Registration failed: ${error.message}`);
     }
+  } else {
+    toast.success("Account created. Please log in.");
+    router.push("/login");
   }
+};
+
 
   return (
-    <div className="flex min-h-svh flex-col lg:px-72 justify-center px-4 ">
-        <h1 className="text-center text-2xl font-bold">Create an Account</h1>
+    <div className="flex h-svh flex-col items-center justify-center px-4 ">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-md space-y-5 rounded-xl p-6 "
       >
+        <h1 className="text-center text-2xl font-bold">Create an Account</h1>
 
         <div>
           <Label htmlFor="fullName">Full Name</Label>
