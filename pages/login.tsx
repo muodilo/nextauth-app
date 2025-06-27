@@ -1,27 +1,27 @@
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { signIn } from "next-auth/react"
-import { useRouter } from "next/router"
-import { toast } from "react-toastify"
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import Link from "next/link"
+import Link from "next/link";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email."),
   password: z.string().min(1, "Password is required."),
-})
+});
 
-type LoginFormType = z.infer<typeof loginSchema>
+type LoginFormType = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
-  const router = useRouter()
-  const [loading, setLoading] = useState(false)
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -29,30 +29,30 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm<LoginFormType>({
     resolver: zodResolver(loginSchema),
-  })
+  });
 
   const onSubmit = async (data: LoginFormType) => {
-    setLoading(true)
+    setLoading(true);
 
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
       redirect: false,
-    })
+    });
 
-    setLoading(false)
+    setLoading(false);
 
     if (res?.ok) {
-      toast.success("Login successful")
-      router.push("/")
+      toast.success("Login successful");
+      router.push("/");
     } else {
-      toast.error("Invalid email or password")
+      toast.error("Invalid email or password");
     }
-  }
+  };
 
   const handleOAuth = (provider: "google" | "github") => {
-    signIn(provider, { callbackUrl: "/" })
-  }
+    signIn(provider, { callbackUrl: "/" });
+  };
 
   return (
     <div className="flex h-screen flex-col items-center justify-center px-4">
@@ -78,7 +78,12 @@ export default function LoginPage() {
           )}
         </div>
 
-        <Button variant='customSubmit' type="submit" className="w-full" disabled={loading}>
+        <Button
+          variant="customSubmit"
+          type="submit"
+          className="w-full"
+          disabled={loading}
+        >
           {loading ? "Signing in..." : "Signin"}
         </Button>
 
@@ -91,7 +96,7 @@ export default function LoginPage() {
             className="flex-1"
             variant="outline"
           >
-            <FcGoogle/>
+            <FcGoogle />
             Continue With Google
           </Button>
           <Button
@@ -100,12 +105,16 @@ export default function LoginPage() {
             className="flex-1"
             variant="outline"
           >
-          < FaGithub/>
-           Continue With GitHub
+            <FaGithub />
+            Continue With GitHub
           </Button>
         </div>
       </form>
-        <Link className="w-full text-center " href={'/register'}><Button className="text-neutral-500 text-center" variant='link'>Don't have an account? Sign Up</Button></Link>
+      <Link className="w-full text-center " href={"/register"}>
+        <Button className="text-neutral-500 text-center" variant="link">
+          Don&apos;t have an account? Sign Up
+        </Button>
+      </Link>
     </div>
-  )
+  );
 }

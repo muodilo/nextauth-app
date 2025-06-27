@@ -1,10 +1,10 @@
 import React from "react";
 import Link from "next/link";
-import { useSession, signOut } from "next-auth/react";
+import { useSession} from "next-auth/react";
 import { Button } from "@/components/ui/button";
 
 const Hero = () => {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   return (
     <div className="relative h-[75vh] rounded-3xl overflow-hidden bg-cover bg-center bg-[url('/images/heroImage.png')]">
       <div className="absolute inset-0 bg-black/40 flex items-end justify-center">
