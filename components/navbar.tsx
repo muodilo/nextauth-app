@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 const Navbar = () => {
   const { data: session, status } = useSession();
   return (
-    <header className="py-3 lg:px-32 md:px-16 px-5 border-b flex justify-between items-center fixed top-0 right-0 left-0">
+    <header className="py-3 bg-white z-20 lg:px-32 md:px-16 px-5 border-b flex justify-between items-center fixed top-0 right-0 left-0">
       <h1 className="text-xl font-semibold">
         <Link href="/">Acme Co</Link>
       </h1>
