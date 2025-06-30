@@ -51,7 +51,7 @@ export default function LoginPage() {
   };
 
   const handleOAuth = (provider: "google" | "github") => {
-    signIn(provider, { callbackUrl: "/" });
+    signIn(provider, { callbackUrl:  `${window.location.origin}/`});
   };
 
   return (

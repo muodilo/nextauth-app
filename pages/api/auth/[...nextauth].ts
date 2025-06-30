@@ -1,4 +1,7 @@
-import NextAuth, { type NextAuthOptions, type DefaultSession} from "next-auth";
+import NextAuth, {
+  type NextAuthOptions,
+  type DefaultSession,
+} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
@@ -19,6 +22,7 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     role?: string;
+    email?: string; 
   }
 }
 
@@ -70,12 +74,15 @@ export const authOptions: NextAuthOptions = {
   },
 
   callbacks: {
-    async jwt({ token, user, account }) {
-      if (user && user.role) {
+    async jwt({ token, user, account, profile }) {
+      if (user?.role) {
         token.role = user.role;
       }
-
       if (account && account.provider !== "credentials") {
+        if (!token.email && profile?.email) {
+          token.email = profile.email;
+        }
+
         const email = token.email ?? "";
         token.role = email.endsWith("@gmail.com") ? "user" : "admin";
       }
@@ -84,7 +91,7 @@ export const authOptions: NextAuthOptions = {
     },
 
     async session({ session, token }) {
-      if (session.user && token.role) {
+      if (session.user) {
         session.user.role = token.role;
       }
       return session;
